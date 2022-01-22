@@ -1,9 +1,22 @@
 # seth-shi/monday-shop
-## TODO
-* 再来一单
-* 查看物流
-* 数据分析
-* API 接口开发,具体看文目录 API
+
+* !!! 非`Docker`运行请使用`v3.0.2`[https://github.com/seth-shi/monday-shop/releases/tag/v3.0.2](https://github.com/seth-shi/monday-shop/releases/tag/v3.0.2) (**新版本部署请勿下载压缩包, 仅作提醒**)
+
+## QQ 群
+* `584453488`
+
+## 部署(新新新)
+1. 下载源码(也可直接下载压缩包, 然后解压)
+    * `git clone https://github.com/seth-shi/monday-shop.git`
+2. 修改配置
+    * `cp .env.example .env`
+    * 修改`.env`文件中数据库,域名等配置信息
+3. 构建镜像
+    * `docker build . -t monday-shop`
+4. 运行
+    * `-p 80:5200`, `80`代表本机的端口,`5200`写死是`swoole`服务运行的端口
+    * `docker run -d -p 80:5200 --name monday-shop-service monday-shop`
+
 ## 目录说明
 * [演示地址](#演示地址)
 * [页面展示](#页面展示)
@@ -105,7 +118,7 @@
 - [ ] 全文搜索
 - [x] **响应式网站**
 
-## Installation
+## Installation (手动安装, 需要依赖`swoole`扩展, 如未安装请下载`v3.0.2`版本)
 1. 获取源代码
 * 直接下载压缩包或者[monday-shop.zip下载](https://github.com/seth-shi/monday-shop/archive/master.zip)
 * 或者`git`克隆源代码

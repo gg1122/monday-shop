@@ -10,6 +10,7 @@ use Gregwar\Captcha\CaptchaBuilder;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -58,16 +59,16 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        if ($request->input('captcha') != session()->get('captcha')) {
+        if (strtolower($request->input('captcha')) != strtolower(session('captcha'))) {
 
-            return back()->withErrors(['captcha' => '验证码不正确']);
+            return redirect('/register')->withErrors(['captcha' => '验证码不正确']);
         }
 
 
         event(new Registered($user = $this->create($request->all())));
 
-        return $this->registered($request, $user)
-            ?: redirect($this->redirectPath())->with('status', '注册成功');
+        $this->registered($request, $user);
+        return redirect('/login')->with('status', '注册成功');
     }
 
     /**
@@ -114,6 +115,7 @@ class RegisterController extends Controller
             'sex' => $data['sex'],
             'password' => bcrypt($data['password']),
             'active_token' => str_random(60),
+            'is_active' => 1,
         ]);
 
     }
@@ -134,5 +136,10 @@ class RegisterController extends Controller
         session()->put('captcha', $builder->getPhrase());
 
         return $builder->get();
+    }
+
+    protected function guard()
+    {
+        return auth()->guard();
     }
 }

@@ -16,12 +16,12 @@
                         <small>回到
                             <a href="/" class="color-green">首 页</a>
                         </small>
-                        <span style="color: red; font-size: 12px;">(请务必将[<span style="font-weight: bold">{{ config('mail.username') }}</span>]加入邮件白名单,否则无法收到激活邮件)
+                        <span style="color: red; font-size: 12px;">(已开放自由注册)
                         </span>
                     </h3>
                     <div class="row row-rl-0">
                         <div class="col-sm-6 col-md-7 col-left">
-                            <form class="p-40" id="register_form" method="post" action="{{ route('register') }}">
+                            <form class="p-40" id="register_form" method="post" action="/register">
 
                                 {{ csrf_field() }}
 
